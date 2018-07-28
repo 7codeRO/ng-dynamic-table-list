@@ -1,0 +1,69 @@
+<div fxFlex class="dynamic-list-wrapper"  fxLayout="column">
+
+    <div class="example-header padding-header" fxLayoutAlign="end">
+      <mat-form-field floatPlaceholder="never">
+        <input matInput #filter placeholder="What are you looking for?">
+      </mat-form-field>
+    </div>
+
+    <hr />
+
+  <div fxFlex fxLayout="column" class="dynamic-table">
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let column of (displayedColumns | keys)" [matColumnDef]="column">
+          <div *ngIf="column != 'templateSeverityName'">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ displayedColumns[column] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span *ngIf="column !== 'templateSeverityName'">
+                <span *ngIf="column.toLowerCase().indexOf('date') > -1">
+                  {{row[column] ? (row[column] | date: dateType ) : '-'}}
+                </span>
+                <span *ngIf="column.toLowerCase().indexOf('date') === -1">
+                  {{primeNumbers && row[column] === -1 ? '-' : stripTags(row[column], column)}}
+                </span>
+              </span>
+            </mat-cell>
+          </div>
+
+          <div *ngIf="column == 'templateSeverityName'">
+            <mat-header-cell *matHeaderCellDef > {{ displayedColumns['templateSeverityName'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-chip-list fxLayout="column">
+                <mat-chip [ngStyle]="{'background': row['templateSeverityColor'], 'color': 'white'}"> {{ row['templateSeverityName'] }} </mat-chip>
+              </mat-chip-list>
+            </mat-cell>
+          </div>
+      </ng-container>
+
+      <ng-container matColumnDef="actions" *ngIf="actions">
+        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button *ngIf="actions.indexOf('edit') > -1" (click)="onEditAction(row)"  mat-icon-button aria-label="edit"><mat-icon svgIcon="edit"></mat-icon></button>
+          <button *ngIf="actions.indexOf('delete') > -1" (click)="onDeleteAction(row)"  mat-icon-button aria-label="remove"><mat-icon svgIcon="remove"></mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumnsWithActions | keys"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnsWithActions | keys;"></mat-row>
+    </mat-table>
+
+    <mat-spinner fxFlex fxLayoutAlign="center center"  *ngIf="loading === true && dataCount === 0"></mat-spinner>
+
+    <div *ngIf="loading === false && dataCount === 0" fxFlex fxLayoutAlign="center center">
+      <h3 class="c-color-medium-grey">No data was found</h3>
+    </div>
+
+  </div>
+
+  <div *ngIf="pagination" fxLayout="row" fxLayoutAlign="space-between" class="padding-20-lr">
+    <pagination
+      (goPage)="pageChange($event)"
+      [page]="currentPage"
+      [perPage]="pageSize"
+      [count]="dataCount">
+    </pagination>
+    <pagination-items-no [itemCount]="data.length" [limit]="pageSize" (onLimitChange)="limitChange($event)" [showAll]="true"></pagination-items-no>
+  </div>
+
+</div>

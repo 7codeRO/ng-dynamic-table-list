@@ -1,0 +1,25 @@
+<div class="pagination">
+  <!--<div class="description">
+    <span class="page-counts">{{ getMin() }} - {{ getMax() }} of {{ count }}</span>
+    <span class="page-totals">{{ totalPages() }} pages</span>
+  </div>-->
+  <ul class="pagination">
+    <li [ngClass]="{'disabled': firstPage()}">
+      <a class="link" (click)="onFirst()" >&lt;&lt;</a>
+    </li>
+    <li [ngClass]="{'disabled': firstPage()}">
+      <a class="link" (click)="onPrev()" >&lt; Prev</a>
+    </li>
+
+    <li *ngFor="let pageNum of pages" [ngClass]="{'active': pageNum === page}">
+      <a class="link" (click)="onPage(pageNum)" [ngClass]="{'active': pageNum === page}">{{ pageNum }}</a>
+    </li>
+
+    <li [ngClass]="{'disabled': lastPage()}">
+      <a class="link" (click)="onNext()" >Next &gt;</a>
+    </li>
+    <li [ngClass]="{'disabled': lastPage()}">
+      <a class="link" (click)="onLast()" >&gt;&gt;</a>
+    </li>
+  </ul>
+</div>

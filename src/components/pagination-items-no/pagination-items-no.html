@@ -1,0 +1,8 @@
+<span class="pagination-label">
+  Items per page
+</span>
+<ul class="pagination-no">
+  <li *ngFor="let item of itemSelection" [ngClass]="{ active: limit === item.value, disabled: limit === item.value }">
+    <a class="no-outline pointer" (click)="selectNo(item.value, $event)">{{item.name}}</a>
+  </li>
+</ul>

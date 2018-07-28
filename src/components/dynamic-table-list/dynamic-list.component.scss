@@ -1,0 +1,67 @@
+.example-header {
+  min-height: 50px;
+
+  mat-form-field {
+    width: 300px;
+    height: 50px;
+  }
+}
+
+.header {
+  padding-bottom: 15px;
+  border-bottom: solid 1px #e3e7ec;
+}
+
+.padding-20-lr {
+  padding: 0 30px;
+}
+
+.padding-header {
+  padding: 24px 30px 12px;
+}
+
+.wrapper-boxes {
+  padding: 0 40px;
+}
+
+.footer {
+  border-top: solid 1px #e3e7ec;
+}
+
+mat-header-row {
+  z-index: 99999;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+:host /deep/ .mat-sort-header-button {
+  text-align: start;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 15px 0;
+}
+
+.dynamic-table {
+  overflow: auto;
+}
+
+:host /deep/ .mat-column-actions mat-icon {
+  width: 15px;
+  height: 15px;
+}
+
+:host /deep/ {
+  .mat-input-wrapper {
+    .mat-form-field-underline {
+      bottom: 20px;
+    }
+  }
+}
+
+mat-table {
+  overflow: auto;
+}
